@@ -12,6 +12,6 @@
     "moduleResolution": "node",
     "baseUrl": "."
   },
-  "include": ["src/**/*"],
+  "include": ["worker/**/*", "shared/**/*"],
   "exclude": ["node_modules", "dist"]
 }

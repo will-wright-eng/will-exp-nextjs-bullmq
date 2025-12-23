@@ -2,11 +2,14 @@ FROM node:24-alpine
 
 WORKDIR /app
 
-# Copy worker files
-COPY ./worker .
+# Copy worker package.json and tsconfig.json
+COPY ./worker/package.json ./worker/tsconfig.json ./
 
-# Copy shared directory to worker/src/shared
-COPY ./nextjs-app/shared ./src/shared
+# Copy worker source code from nextjs-app/worker
+COPY ./nextjs-app/worker ./worker
+
+# Copy shared directory
+COPY ./nextjs-app/shared ./shared
 
 # Install dependencies
 RUN npm install

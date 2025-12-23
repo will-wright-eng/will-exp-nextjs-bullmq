@@ -11,37 +11,14 @@ help: ## Show this help message
 	@echo "$(GREEN)Available targets:$(NC)"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(YELLOW)%-15s$(NC) %s\n", $$1, $$2}'
 
-# Install dependencies
-install: install-shared install-nextjs install-worker ## Install dependencies for all services
-
-install-shared: ## Install shared package dependencies
-	@echo "Installing shared package dependencies..."
-	cd nextjs-app/shared && npm install
-
-install-nextjs: ## Install Next.js app dependencies
+install: ## Install Next.js app dependencies
 	@echo "Installing Next.js app dependencies..."
 	cd nextjs-app && npm install
-
-install-worker: ## Install worker dependencies
-	@echo "Installing worker dependencies..."
-	cd worker && npm install
 
 # Build commands
 build: ## Build Docker images
 	@echo "Building Docker images..."
 	docker compose build
-
-build-shared: ## Build shared package
-	@echo "Building shared package..."
-	cd nextjs-app/shared && npm run build
-
-build-nextjs: ## Build Next.js app
-	@echo "Building Next.js app..."
-	cd nextjs-app && npm run build
-
-build-worker: ## Build worker service
-	@echo "Building worker service..."
-	cd worker && npm run build
 
 # Docker Compose commands
 up: ## Start all services

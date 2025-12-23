@@ -1,6 +1,6 @@
 import { Job } from 'bullmq';
-import { JobData } from '../shared/types';
-import { getDbClient } from '../shared/db/client';
+import { JobData } from '../../shared/types';
+import { getDbClient } from '../../shared/db/client';
 
 export async function processEmailJob(job: Job<JobData>): Promise<void> {
   console.log(`Processing email job: ${job.id}`);
