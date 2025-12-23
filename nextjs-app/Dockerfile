@@ -2,21 +2,21 @@ FROM node:24-alpine
 
 WORKDIR /app
 
-# Copy shared code
-COPY shared/ ./shared/
-
-# Copy Next.js app
+# Copy Next.js app (includes shared directory)
 COPY nextjs-app/ ./nextjs-app/
 
+# Copy migrations directory
+COPY migrations/ ./migrations/
+
 # Install dependencies
-WORKDIR /app/shared
+WORKDIR /app/nextjs-app/shared
 RUN npm install
 
 WORKDIR /app/nextjs-app
 RUN npm install
 
 # Build shared code (if needed)
-WORKDIR /app/shared
+WORKDIR /app/nextjs-app/shared
 RUN npm run build || echo "No build script in shared"
 
 # Build Next.js app
@@ -36,4 +36,4 @@ ENV HOSTNAME="0.0.0.0"
 ENV NODE_ENV=production
 
 WORKDIR /app/nextjs-app
-CMD ["npm", "start"]
+CMD ["node", "scripts/start-with-migrations.js"]

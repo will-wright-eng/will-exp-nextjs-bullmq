@@ -17,13 +17,8 @@ services:
     container_name: bullmq-postgres
     ports:
     - "5432:5432"
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-bullmq_jobs}
     volumes:
     - postgres-data:/var/lib/postgresql/data
-    - ./shared/src/db/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
       interval: 5s
@@ -40,9 +35,6 @@ services:
     ports:
     - "3000:3000"
     environment:
-    - NODE_ENV=${NODE_ENV:-development}
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
     - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-bullmq_jobs}
     - NEXT_PUBLIC_API_URL=http://localhost:3000
     depends_on:
@@ -52,11 +44,6 @@ services:
         condition: service_healthy
     env_file:
     - .env
-    volumes:
-    - ./nextjs-app:/app/nextjs-app
-    - ./shared:/app/shared
-    - /app/nextjs-app/.next
-    - /app/nextjs-app/node_modules
 
   worker:
     build:
@@ -64,9 +51,6 @@ services:
       dockerfile: worker/Dockerfile
     container_name: bullmq-worker
     environment:
-    - NODE_ENV=${NODE_ENV:-development}
-    - REDIS_HOST=redis
-    - REDIS_PORT=6379
     - DATABASE_URL=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-bullmq_jobs}
     depends_on:
       postgres:
@@ -75,10 +59,6 @@ services:
         condition: service_healthy
     env_file:
     - .env
-    volumes:
-    - ./worker:/app/worker
-    - ./shared:/app/shared
-    - /app/worker/node_modules
     # Uncomment to scale workers:
     # deploy:
     #   replicas: 2

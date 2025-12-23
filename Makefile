@@ -16,7 +16,7 @@ install: install-shared install-nextjs install-worker ## Install dependencies fo
 
 install-shared: ## Install shared package dependencies
 	@echo "Installing shared package dependencies..."
-	cd shared && npm install
+	cd nextjs-app/shared && npm install
 
 install-nextjs: ## Install Next.js app dependencies
 	@echo "Installing Next.js app dependencies..."
@@ -33,7 +33,7 @@ build: ## Build Docker images
 
 build-shared: ## Build shared package
 	@echo "Building shared package..."
-	cd shared && npm run build
+	cd nextjs-app/shared && npm run build
 
 build-nextjs: ## Build Next.js app
 	@echo "Building Next.js app..."
