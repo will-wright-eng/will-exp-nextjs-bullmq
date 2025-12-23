@@ -49,15 +49,3 @@ repos:
   rev: v2.4.1
   hooks:
   - id: codespell
-
-# ESLint for twl-cli-api
-- repo: local
-  hooks:
-  - id: eslint-twl-cli-api
-    name: ESLint (twl-cli-api)
-    entry: bash -c 'cd twl-cli-api && bun run lint:fix'
-    language: system
-    types: [file]
-    files: ^twl-cli-api/.*\.ts$
-    pass_filenames: false
-    verbose: true

@@ -1,9 +1,9 @@
 import { Worker } from 'bullmq';
 import { processEmailJob } from './processors/email-processor';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { getDbClient, closeDbConnection } from './shared/db/client';
+import { getDbClient, closeDbConnection } from '../shared/db/client';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { JobData } from './shared/types';
+import { JobData } from '../shared/types';
 
 console.log('Worker service starting...');
 
