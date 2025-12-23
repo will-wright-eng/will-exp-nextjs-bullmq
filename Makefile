@@ -72,16 +72,6 @@ clean-all: clean ## Remove all Docker images for this project
 	@echo "Removing all Docker images for this project..."
 	docker compose down -v --rmi all
 
-# Test commands (placeholder)
-test: ## Run tests
-	@echo "Running tests..."
-	@echo "TODO: Add test commands"
-
-# Status check
-status: ## Check service status
-	@echo "Service status:"
-	docker compose ps
-
 # Scale workers
 scale-worker: ## Scale workers to 2 instances
 	@echo "Scaling workers to 2 instances..."
