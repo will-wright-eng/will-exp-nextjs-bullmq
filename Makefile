@@ -11,6 +11,9 @@ help: ## Show this help message
 	@echo "$(GREEN)Available targets:$(NC)"
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  $(YELLOW)%-15s$(NC) %s\n", $$1, $$2}'
 
+init: ## Initialize the project
+	cp .env.example .env
+
 install: ## Install Next.js app dependencies
 	@echo "Installing Next.js app dependencies..."
 	cd nextjs-app && npm install
@@ -82,5 +85,5 @@ rebuild: down build up ## Rebuild and restart all services
 	@echo "Rebuilt and restarted all services"
 
 # Quick start (install, build, up)
-quick-start: install build up ## Install dependencies, build, and start all services
+quick-start: init install build up ## Initialize the project, install dependencies, build, and start all services
 	@echo "Quick start complete! Services are running."
